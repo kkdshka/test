@@ -1,31 +1,27 @@
-import React, { useState } from "react";
+import React, { Fragment } from "react";
 import { HiOutlineStar, HiStar } from "react-icons/hi";
 import "./StarButton.scss";
+import { InteractiveButton } from "../common/InteractiveButton";
 
 export const StarButton = () => {
-  const [type, setType] = useState<"starred" | "unstarred">("unstarred");
-
-  const Button = () => {
-    if (type === "unstarred") {
-      return (
-        <button className="button" onClick={() => setType("starred")}>
-          <HiOutlineStar className="icon" />
-          Star
-        </button>
-      );
-    } else {
-      return (
-        <button className="button" onClick={() => setType("unstarred")}>
-          <HiStar className="icon" />
-          Unstar
-        </button>
-      );
-    }
+  const name = {
+    active: (
+      <Fragment>
+        <HiStar className="star-button-icon" />
+        Unstar
+      </Fragment>
+    ),
+    nonactive: (
+      <Fragment>
+        <HiOutlineStar className="star-button-icon" />
+        Star
+      </Fragment>
+    ),
   };
 
   return (
-    <div className="button-container">
-      <Button />
+    <div className="star-button-container">
+      <InteractiveButton name={name} />
     </div>
   );
 };

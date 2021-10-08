@@ -13,7 +13,9 @@ type Props = {
 export const Repository = ({ repository }: Props) => {
   return (
     <article className="repository-container">
-      <StarButton />
+      <div className="repository-button-container">
+        <StarButton />
+      </div>
       <div className="repository-name-container">
         <RiBookMarkLine className="bookmark-icon" />
         <a

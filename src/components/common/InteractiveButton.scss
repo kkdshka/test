@@ -1,0 +1,27 @@
+.interactive-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: solid 1px rgba(240, 246, 252, 0.1);
+  border-radius: 6px;
+
+  padding: 3px 12px;
+
+  background-color: rgb(33, 38, 45);
+  color: rgb(201, 209, 217);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-weight: 500;
+
+  &:hover {
+    cursor: pointer;
+
+    background-color: #30363d;
+    border-color: #8b949e;
+
+    transition-delay: 0s;
+    transition-duration: 0.2s;
+    transition-property: color, background-color, border-color;
+    transition-timing-function: cubic-bezier(0.3, 0, 0.5, 1);
+  }
+}

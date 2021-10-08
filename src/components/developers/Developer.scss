@@ -1,0 +1,99 @@
+.developer-container {
+  padding: 16px;
+  border-top: 1px solid rgb(48, 54, 61);
+  display: flex;
+  flex-direction: row;
+}
+
+.rank {
+  font-size: 12px;
+  width: 2%;
+}
+
+.avatar-container {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.name-container {
+  width: 30%;
+}
+
+.name {
+  display: block;
+
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgb(88, 166, 255);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.username {
+  display: block;
+
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(139, 148, 158);
+
+  &:hover {
+    color: rgb(88, 166, 255);
+    text-decoration: underline;
+  }
+}
+
+.developer-repository-container {
+  width: 30%;
+}
+
+.fire-icon {
+  color: rgb(219, 109, 40);
+  margin-right: 4px;
+}
+
+.align-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.popular-repo {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.developer-bookmark-icon {
+  margin-right: 4px;
+  font-size: 16px;
+}
+
+.developer-repository-name {
+  font-size: 16px;
+  color: rgb(88, 166, 255);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.developer-repository-description {
+  font-size: 12px;
+}
+
+.developer-buttons-container {
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

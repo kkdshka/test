@@ -5,3 +5,52 @@
   flex-direction: column;
 }
 
+.repository-name-container {
+  display: flex;
+  align-items: center;
+}
+
+.repository-name {
+  font-size: 20px;
+  font-weight: 400;
+  color: rgb(88, 166, 255);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.bookmark-icon {
+  margin-right: 4px;
+  font-size: 20px;
+}
+
+.description {
+  font-size: 14px;
+}
+
+.repository-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.repository-footer-element {
+  margin-right: 16px;
+  font-size: 12px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.star-icon {
+  font-size: 16px;
+}
+.person-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 2px;
+}

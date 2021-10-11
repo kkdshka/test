@@ -1,7 +1,7 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Repositories } from "./components/repositories/Repositories";
 import { Developers } from "./components/developers/Developers";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (

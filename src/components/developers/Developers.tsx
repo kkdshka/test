@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Header } from "../Header";
-import "./Developers.scss";
-import { IDeveloper } from "../../../types/IDeveloper";
-import { Developer } from "./Developer";
-import { Navigation } from "../common/Navigation";
-import { programmingLanguageOptions } from "../../utils/selectorsOptions";
-import { Selector } from "../common/Selector";
 import { useQuery } from "react-query";
+import { Developer } from "./Developer";
+import { Header } from "../Header";
+import { Navigation } from "../common/Navigation";
+import { Selector } from "../common/Selector";
+import { IDeveloper } from "../../../types/IDeveloper";
+import { programmingLanguageOptions } from "../../utils/selectorsOptions";
+import "./Developers.scss";
 
 export const Developers = () => {
   const [languageFilter, setLanguageFilter] = useState<string>("");

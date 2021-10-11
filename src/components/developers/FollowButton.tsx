@@ -1,5 +1,4 @@
 import React from "react";
-import "./FollowButton.scss";
 import { InteractiveButton } from "../common/InteractiveButton";
 
 export const FollowButton = () => {
@@ -7,9 +6,6 @@ export const FollowButton = () => {
     active: "Unfollow",
     nonactive: "Follow",
   };
-  return (
-    <div className="follow-button-container">
-      <InteractiveButton name={name} />
-    </div>
-  );
+
+  return <InteractiveButton name={name} />;
 };

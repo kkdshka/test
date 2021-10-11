@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { HiOutlineStar, HiStar } from "react-icons/hi";
-import "./StarButton.scss";
 import { InteractiveButton } from "../common/InteractiveButton";
+import "./StarButton.scss";
 
 export const StarButton = () => {
   const name = {

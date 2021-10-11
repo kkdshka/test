@@ -1,9 +1,9 @@
 import React from "react";
 import { AiOutlineFire } from "react-icons/ai";
 import { RiBookMarkLine } from "react-icons/ri";
+import { FollowButton } from "./FollowButton";
 import { IDeveloper } from "../../../types/IDeveloper";
 import "./Developer.scss";
-import { FollowButton } from "./FollowButton";
 
 export const Developer = ({ developer }: { developer: IDeveloper }) => {
   return (

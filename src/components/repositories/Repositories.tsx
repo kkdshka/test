@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Header } from "../Header";
-import "./Repositories.scss";
-import { IRepository } from "../../../types/IRepository";
+import { useQuery } from "react-query";
 import { Repository } from "./Repository";
+import { Header } from "../Header";
 import { Navigation } from "../common/Navigation";
 import { Selector } from "../common/Selector";
+import { IRepository } from "../../../types/IRepository";
 import { programmingLanguageOptions } from "../../utils/selectorsOptions";
-import { useQuery } from "react-query";
+import "./Repositories.scss";
 
 export const Repositories = () => {
   const [languageFilter, setLanguageFilter] = useState<string>("");

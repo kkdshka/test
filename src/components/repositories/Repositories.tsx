@@ -11,24 +11,29 @@ import { programmingLanguageOptions } from "../../utils/selectorsOptions";
 export const Repositories = () => {
   const [repositories, setRepositories] = useState<Array<IRepository>>([]);
   const [languageFilter, setLanguageFilter] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (languageFilter !== "") {
+      setLoading(true);
       axios
         .get(
           `https://gh-trending-api.herokuapp.com/repositories/${languageFilter}`
         )
         .then((result) => {
           setRepositories(result.data);
+          setLoading(false);
         })
         .catch((error) => {
           console.log(error);
         });
     } else {
+      setLoading(true);
       axios
         .get("https://gh-trending-api.herokuapp.com/repositories")
         .then((result) => {
           setRepositories(result.data);
+          setLoading(false);
         })
         .catch((error) => {
           console.log(error);
@@ -52,9 +57,16 @@ export const Repositories = () => {
             onChange={handleLanguageChange}
           />
         </div>
-        {repositories.map((repository, index) => (
-          <Repository key={`repository-${index}`} repository={repository} />
-        ))}
+        {repositories.length > 0 || loading ? (
+          repositories.map((repository, index) => (
+            <Repository key={`repository-${index}`} repository={repository} />
+          ))
+        ) : (
+          <div className="no-repo-data">
+            It looks like we don’t have any trending repositories for{" "}
+            {languageFilter}.
+          </div>
+        )}
       </div>
     </div>
   );

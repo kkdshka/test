@@ -1,48 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Header } from "../Header";
 import "./Developers.scss";
 import { IDeveloper } from "../../../types/IDeveloper";
-import axios from "axios";
 import { Developer } from "./Developer";
 import { Navigation } from "../common/Navigation";
 import { programmingLanguageOptions } from "../../utils/selectorsOptions";
 import { Selector } from "../common/Selector";
+import { useQuery } from "react-query";
 
 export const Developers = () => {
-  const [developers, setDevelopers] = useState<Array<IDeveloper>>([]);
   const [languageFilter, setLanguageFilter] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    if (languageFilter !== "") {
-      setLoading(true);
-      axios
-        .get(
-          `https://gh-trending-api.herokuapp.com/developers/${languageFilter}`
-        )
-        .then((result) => {
-          setDevelopers(result.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      setLoading(true);
-      axios
-        .get("https://gh-trending-api.herokuapp.com/developers")
-        .then((result) => {
-          setDevelopers(result.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [languageFilter, setLanguageFilter]);
 
   const handleLanguageChange = (language: string) => {
     setLanguageFilter(language);
+  };
+
+  const { isLoading, data: developers } = useQuery<Array<IDeveloper>, Error>(
+    ["devData", languageFilter],
+    () => {
+      if (languageFilter !== "") {
+        return fetch(
+          `https://gh-trending-api.herokuapp.com/developers/${languageFilter}`
+        ).then((res) => res.json());
+      } else {
+        return fetch("https://gh-trending-api.herokuapp.com/developers").then(
+          (res) => res.json()
+        );
+      }
+    }
+  );
+
+  const renderDevelopers = () => {
+    if (isLoading || developers === undefined) {
+      return <div className="no-dev-data">Loading data...</div>;
+    } else if (developers.length === 0) {
+      return (
+        <div className="no-dev-data">
+          It looks like we don’t have any trending developers for{" "}
+          {languageFilter}.
+        </div>
+      );
+    } else {
+      return developers.map((developer, index) => (
+        <Developer key={`developer-${index}`} developer={developer} />
+      ));
+    }
   };
 
   return (
@@ -57,16 +59,7 @@ export const Developers = () => {
             onChange={handleLanguageChange}
           />
         </div>
-        {developers.length > 0 || loading ? (
-          developers.map((developer, index) => (
-            <Developer key={`developer-${index}`} developer={developer} />
-          ))
-        ) : (
-          <div className="no-dev-data">
-            It looks like we don’t have any trending developers for{" "}
-            {languageFilter}.
-          </div>
-        )}
+        {renderDevelopers()}
       </div>
     </div>
   );

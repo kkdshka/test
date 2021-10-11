@@ -1,48 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Header } from "../Header";
-import axios from "axios";
 import "./Repositories.scss";
 import { IRepository } from "../../../types/IRepository";
 import { Repository } from "./Repository";
 import { Navigation } from "../common/Navigation";
 import { Selector } from "../common/Selector";
 import { programmingLanguageOptions } from "../../utils/selectorsOptions";
+import { useQuery } from "react-query";
 
 export const Repositories = () => {
-  const [repositories, setRepositories] = useState<Array<IRepository>>([]);
   const [languageFilter, setLanguageFilter] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    if (languageFilter !== "") {
-      setLoading(true);
-      axios
-        .get(
-          `https://gh-trending-api.herokuapp.com/repositories/${languageFilter}`
-        )
-        .then((result) => {
-          setRepositories(result.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      setLoading(true);
-      axios
-        .get("https://gh-trending-api.herokuapp.com/repositories")
-        .then((result) => {
-          setRepositories(result.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [languageFilter, setLanguageFilter]);
 
   const handleLanguageChange = (language: string) => {
     setLanguageFilter(language);
+  };
+
+  const { isLoading, data: repositories } = useQuery<Array<IRepository>, Error>(
+    ["repoData", languageFilter],
+    () => {
+      if (languageFilter !== "") {
+        return fetch(
+          `https://gh-trending-api.herokuapp.com/repositories/${languageFilter}`
+        ).then((res) => res.json());
+      } else {
+        return fetch("https://gh-trending-api.herokuapp.com/repositories").then(
+          (res) => res.json()
+        );
+      }
+    }
+  );
+
+  const renderRepositories = () => {
+    if (isLoading || repositories === undefined) {
+      return <div className="no-repo-data">Loading data...</div>;
+    } else if (repositories.length === 0) {
+      return (
+        <div className="no-repo-data">
+          It looks like we don’t have any trending repositories for{" "}
+          {languageFilter}.
+        </div>
+      );
+    } else {
+      return repositories.map((repository, index) => (
+        <Repository key={`repository-${index}`} repository={repository} />
+      ));
+    }
   };
 
   return (
@@ -57,16 +59,7 @@ export const Repositories = () => {
             onChange={handleLanguageChange}
           />
         </div>
-        {repositories.length > 0 || loading ? (
-          repositories.map((repository, index) => (
-            <Repository key={`repository-${index}`} repository={repository} />
-          ))
-        ) : (
-          <div className="no-repo-data">
-            It looks like we don’t have any trending repositories for{" "}
-            {languageFilter}.
-          </div>
-        )}
+        {renderRepositories()}
       </div>
     </div>
   );

@@ -16,4 +16,7 @@
 .repositories-header {
   background-color: rgb(22, 27, 34);
   padding: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

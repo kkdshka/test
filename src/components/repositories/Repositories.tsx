@@ -5,20 +5,40 @@ import "./Repositories.scss";
 import { IRepository } from "../../../types/IRepository";
 import { Repository } from "./Repository";
 import { Navigation } from "../common/Navigation";
+import { Selector } from "../common/Selector";
+import { programmingLanguageOptions } from "../../utils/selectorsOptions";
 
 export const Repositories = () => {
   const [repositories, setRepositories] = useState<Array<IRepository>>([]);
+  const [languageFilter, setLanguageFilter] = useState<string>("");
 
   useEffect(() => {
-    axios
-      .get("https://gh-trending-api.herokuapp.com/repositories")
-      .then((result) => {
-        setRepositories(result.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+    if (languageFilter !== "") {
+      axios
+        .get(
+          `https://gh-trending-api.herokuapp.com/repositories/${languageFilter}`
+        )
+        .then((result) => {
+          setRepositories(result.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      axios
+        .get("https://gh-trending-api.herokuapp.com/repositories")
+        .then((result) => {
+          setRepositories(result.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [languageFilter, setLanguageFilter]);
+
+  const handleLanguageChange = (language: string) => {
+    setLanguageFilter(language);
+  };
 
   return (
     <div className="flex-container">
@@ -26,6 +46,11 @@ export const Repositories = () => {
       <div className="repositories-container">
         <div className="repositories-header">
           <Navigation activeLink="repo" />
+          <Selector
+            name="Language"
+            options={programmingLanguageOptions}
+            onChange={handleLanguageChange}
+          />
         </div>
         {repositories.map((repository, index) => (
           <Repository key={`repository-${index}`} repository={repository} />

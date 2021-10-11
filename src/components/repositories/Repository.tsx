@@ -40,8 +40,9 @@ export const Repository = ({ repository }: Props) => {
         </span>
         <span className="repository-footer-element">
           Built by{" "}
-          {repository.builtBy.map((person) => (
+          {repository.builtBy.map((person, index) => (
             <img
+              key={`${repository.repositoryName}-avatar-${index}`}
               className="person-avatar"
               src={person.avatar}
               alt={person.username}

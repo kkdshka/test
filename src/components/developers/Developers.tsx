@@ -6,6 +6,7 @@ import { Navigation } from "../common/Navigation";
 import { Selector } from "../common/Selector";
 import { IDeveloper } from "../../../types/IDeveloper";
 import { programmingLanguageOptions } from "../../utils/selectorsOptions";
+import { getDevelopers } from "../../api/api";
 import "./Developers.scss";
 
 export const Developers = () => {
@@ -17,17 +18,7 @@ export const Developers = () => {
 
   const { isLoading, data: developers } = useQuery<Array<IDeveloper>, Error>(
     ["devData", languageFilter],
-    () => {
-      if (languageFilter !== "") {
-        return fetch(
-          `https://gh-trending-api.herokuapp.com/developers/${languageFilter}`
-        ).then((res) => res.json());
-      } else {
-        return fetch("https://gh-trending-api.herokuapp.com/developers").then(
-          (res) => res.json()
-        );
-      }
-    }
+    getDevelopers(languageFilter)
   );
 
   const renderDevelopers = () => {

@@ -6,6 +6,7 @@ import { Navigation } from "../common/Navigation";
 import { Selector } from "../common/Selector";
 import { IRepository } from "../../../types/IRepository";
 import { programmingLanguageOptions } from "../../utils/selectorsOptions";
+import { getRepositories } from "../../api/api";
 import "./Repositories.scss";
 
 export const Repositories = () => {
@@ -17,17 +18,7 @@ export const Repositories = () => {
 
   const { isLoading, data: repositories } = useQuery<Array<IRepository>, Error>(
     ["repoData", languageFilter],
-    () => {
-      if (languageFilter !== "") {
-        return fetch(
-          `https://gh-trending-api.herokuapp.com/repositories/${languageFilter}`
-        ).then((res) => res.json());
-      } else {
-        return fetch("https://gh-trending-api.herokuapp.com/repositories").then(
-          (res) => res.json()
-        );
-      }
-    }
+    getRepositories(languageFilter)
   );
 
   const renderRepositories = () => {
